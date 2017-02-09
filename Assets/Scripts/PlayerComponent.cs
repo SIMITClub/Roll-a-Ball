@@ -25,9 +25,15 @@ public class PlayerComponent : MonoBehaviour {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 
+		//For desktop
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-
 		rb.AddForce(movement * speed);
+
+		//For Mobile Devices
+		//Vector3 movement = new Vector3 (Input.acceleration.x, 0.0f, Input.acceleration.y);
+		//rb.velocity = movement * speed;
+
+
 	}
 
 	void OnTriggerEnter(Collider other) 
