@@ -13,6 +13,7 @@ public class PlayerComponent : MonoBehaviour {
 	private int count;
 
 	public Mesh objectToCreate;
+	private GameObject previousObj;
 
 	void Start()
 	{
@@ -29,12 +30,12 @@ public class PlayerComponent : MonoBehaviour {
 		float moveVertical = Input.GetAxis ("Vertical");
 
 		//For desktop
-		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-		rb.AddForce(movement * speed);
+		//Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
+		//rb.AddForce(movement * speed);
 
 		//For Mobile Devices
-		//Vector3 movement = new Vector3 (Input.acceleration.x, 0.0f, Input.acceleration.y);
-		//rb.velocity = movement * speed;
+		Vector3 movement = new Vector3 (Input.acceleration.x, 0.0f, Input.acceleration.y);
+		rb.velocity = movement * speed;
 
 
 	}
@@ -56,14 +57,18 @@ public class PlayerComponent : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) 
 	{
+		if (previousObj) {
+			previousObj.SetActive (true);
+		}
 		if(other.gameObject.CompareTag("Pick Up"))
 		{
 			other.gameObject.SetActive (false);
+			previousObj = other.gameObject;
 			count++;
 
 			setCountText ();
-			if (count >= 11)
-				WinText.text = "You Win";
+//			if (count >= 11)
+//				WinText.text = "You Win";
 		}
 	}
 
